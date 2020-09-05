@@ -1,0 +1,8 @@
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\bin\Debug\MyNotes.exe.config
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\bin\Debug\MyNotes.exe
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\bin\Debug\MyNotes.pdb
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\obj\Debug\MyNotes.csprojResolveAssemblyReference.cache
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\obj\Debug\MyNotes.MainForm.resources
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\obj\Debug\MyNotes.csproj.GenerateResource.Cache
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\obj\Debug\MyNotes.exe
+C:\Users\Salman-pc\Documents\SharpDevelop Projects\MyNotes\MyNotes\obj\Debug\MyNotes.pdb
