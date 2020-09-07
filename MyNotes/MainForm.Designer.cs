@@ -43,6 +43,8 @@ namespace MyNotes
 		private System.Windows.Forms.ToolStripMenuItem fontStyleToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem fontColorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+		private System.Windows.Forms.ColorDialog colorDialog1;
+		private System.Windows.Forms.FontDialog fontDialog1;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -94,6 +96,8 @@ namespace MyNotes
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+			this.fontDialog1 = new System.Windows.Forms.FontDialog();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -304,13 +308,13 @@ namespace MyNotes
 			// fontStyleToolStripMenuItem
 			// 
 			this.fontStyleToolStripMenuItem.Name = "fontStyleToolStripMenuItem";
-			this.fontStyleToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+			this.fontStyleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.fontStyleToolStripMenuItem.Text = "Font Style";
 			// 
 			// fontColorToolStripMenuItem
 			// 
 			this.fontColorToolStripMenuItem.Name = "fontColorToolStripMenuItem";
-			this.fontColorToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+			this.fontColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.fontColorToolStripMenuItem.Text = "Font Color";
 			// 
 			// toolStripSeparator2
