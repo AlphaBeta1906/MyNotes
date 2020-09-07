@@ -101,7 +101,7 @@ namespace MyNotes
 		
 		void DateToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			string Date =  DateTime.Now.ToString("yy-MM-dd");
+			string Date =  DateTime.Now.ToString("yyyy MMMMM dd");
 			richTextBox1.Text =  richTextBox1.Text  + Date;
 		}
 		
