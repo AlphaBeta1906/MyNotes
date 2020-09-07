@@ -32,7 +32,6 @@ namespace MyNotes
 		private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem dateToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
@@ -40,8 +39,6 @@ namespace MyNotes
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ToolStripMenuItem fontStyleToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem fontColorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
 		private System.Windows.Forms.ColorDialog colorDialog1;
 		private System.Windows.Forms.FontDialog fontDialog1;
@@ -88,12 +85,9 @@ namespace MyNotes
 			this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.fontStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.fontColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
@@ -113,9 +107,13 @@ namespace MyNotes
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(601, 30);
 			this.panel1.TabIndex = 0;
+			this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseDown);
+			this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseMove);
+			this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseUp);
 			// 
 			// label1
 			// 
+			this.label1.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.White;
 			this.label1.Location = new System.Drawing.Point(186, 2);
 			this.label1.Name = "label1";
@@ -123,25 +121,38 @@ namespace MyNotes
 			this.label1.TabIndex = 11;
 			this.label1.Text = "Untitled";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseDown);
+			this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseMove);
+			this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseUp);
 			// 
 			// button1
 			// 
+			this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.ForeColor = System.Drawing.Color.White;
 			this.button1.Location = new System.Drawing.Point(566, 0);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(32, 23);
 			this.button1.TabIndex = 9;
 			this.button1.Text = "X";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// button2
 			// 
-			this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this.button2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.button2.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button2.ForeColor = System.Drawing.Color.White;
 			this.button2.Location = new System.Drawing.Point(531, 0);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(32, 23);
 			this.button2.TabIndex = 10;
 			this.button2.Text = "--";
 			this.button2.UseVisualStyleBackColor = false;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// panel2
 			// 
@@ -155,6 +166,7 @@ namespace MyNotes
 			// richTextBox1
 			// 
 			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBox1.Location = new System.Drawing.Point(0, 24);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.Size = new System.Drawing.Size(601, 398);
@@ -162,20 +174,25 @@ namespace MyNotes
 			this.richTextBox1.Text = "";
 			this.richTextBox1.SelectionChanged += new System.EventHandler(this.RichTextBox1SelectionChanged);
 			this.richTextBox1.TextChanged += new System.EventHandler(this.RichTextBox1TextChanged);
+			this.richTextBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseDown);
+			this.richTextBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseMove);
+			this.richTextBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseUp);
 			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.fileToolStripMenuItem,
-			this.editToolStripMenuItem,
-			this.aboutToolStripMenuItem});
+			this.editToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
 			this.menuStrip1.Size = new System.Drawing.Size(601, 24);
 			this.menuStrip1.TabIndex = 8;
 			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseDown);
+			this.menuStrip1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseMove);
+			this.menuStrip1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseUp);
 			// 
 			// fileToolStripMenuItem
 			// 
@@ -232,8 +249,8 @@ namespace MyNotes
 			this.cutToolStripMenuItem,
 			this.deleteToolStripMenuItem,
 			this.selectAllToolStripMenuItem,
-			this.fontToolStripMenuItem,
 			this.toolStripSeparator2,
+			this.fontToolStripMenuItem,
 			this.dateToolStripMenuItem});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
@@ -244,7 +261,7 @@ namespace MyNotes
 			this.undoToolStripMenuItem.Enabled = false;
 			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
 			this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.undoToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.undoToolStripMenuItem.Text = "Undo";
 			this.undoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItemClick);
 			// 
@@ -253,87 +270,76 @@ namespace MyNotes
 			this.redoToolStripMenuItem.Enabled = false;
 			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
 			this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.redoToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.redoToolStripMenuItem.Text = "Redo";
 			this.redoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItemClick);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(164, 6);
 			// 
 			// copyToolStripMenuItem
 			// 
 			this.copyToolStripMenuItem.Enabled = false;
 			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-			this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.copyToolStripMenuItem.Text = "Copy";
 			// 
 			// pasteToolStripMenuItem
 			// 
 			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.pasteToolStripMenuItem.Text = "Paste";
 			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItemClick);
 			// 
 			// cutToolStripMenuItem
 			// 
 			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-			this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+			| System.Windows.Forms.Keys.C)));
+			this.cutToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.cutToolStripMenuItem.Text = "Cut";
 			this.cutToolStripMenuItem.Click += new System.EventHandler(this.CutToolStripMenuItemClick);
 			// 
 			// deleteToolStripMenuItem
 			// 
 			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.deleteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.deleteToolStripMenuItem.Text = "Delete";
 			this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItemClick);
 			// 
 			// selectAllToolStripMenuItem
 			// 
 			this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.selectAllToolStripMenuItem.Text = "Select All";
-			// 
-			// fontToolStripMenuItem
-			// 
-			this.fontToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.fontStyleToolStripMenuItem,
-			this.fontColorToolStripMenuItem});
-			this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-			this.fontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.fontToolStripMenuItem.Text = "Font...";
-			// 
-			// fontStyleToolStripMenuItem
-			// 
-			this.fontStyleToolStripMenuItem.Name = "fontStyleToolStripMenuItem";
-			this.fontStyleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.fontStyleToolStripMenuItem.Text = "Font Style";
-			// 
-			// fontColorToolStripMenuItem
-			// 
-			this.fontColorToolStripMenuItem.Name = "fontColorToolStripMenuItem";
-			this.fontColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.fontColorToolStripMenuItem.Text = "Font Color";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(164, 6);
+			// 
+			// fontToolStripMenuItem
+			// 
+			this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
+			this.fontToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+			this.fontToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.fontToolStripMenuItem.Text = "Font";
+			this.fontToolStripMenuItem.Click += new System.EventHandler(this.FontToolStripMenuItemClick);
 			// 
 			// dateToolStripMenuItem
 			// 
 			this.dateToolStripMenuItem.Name = "dateToolStripMenuItem";
-			this.dateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.dateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+			| System.Windows.Forms.Keys.D)));
+			this.dateToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.dateToolStripMenuItem.Text = "Date";
 			this.dateToolStripMenuItem.Click += new System.EventHandler(this.DateToolStripMenuItemClick);
-			// 
-			// aboutToolStripMenuItem
-			// 
-			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-			this.aboutToolStripMenuItem.Text = "About";
 			// 
 			// openFileDialog1
 			// 
@@ -350,6 +356,9 @@ namespace MyNotes
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "MainForm";
 			this.Text = "MyNotes";
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseDown);
+			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseMove);
+			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseUp);
 			this.panel1.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();

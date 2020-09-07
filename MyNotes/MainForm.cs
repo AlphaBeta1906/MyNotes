@@ -15,10 +15,14 @@ using System.IO;
 namespace MyNotes
 {
 	/// <summary>
-	/// Description of MainForm.
+	/// MyNotes is a ligthweigth text writer/notepad appliaction
+	/// i made using c# windows form
+	/// 	
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		private bool mouseDown;
+		private Point lastLocation;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -75,7 +79,7 @@ namespace MyNotes
 			if (richTextBox1.CanUndo){
 				richTextBox1.Undo();
 			}
-			redoToolStripMenuItem.Enabled = true;
+			redoToolStripMenuItem.Enabled = true;//when undo button is click,it will set redo button to enable to true/on
 		}
 		
 		void RedoToolStripMenuItemClick(object sender, EventArgs e)
@@ -101,21 +105,36 @@ namespace MyNotes
 			richTextBox1.Text =  richTextBox1.Text  + Date;
 		}
 		
+		void FontToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			if(fontDialog1.ShowDialog() == DialogResult.OK)
+			{
+				richTextBox1.Font = fontDialog1.Font;
+			}else{
+				richTextBox1.Focus();
+			}
+		}
+		
 		//others
 		void RichTextBox1TextChanged(object sender, EventArgs e)
 		{
 			undoToolStripMenuItem.Enabled = true;
 		}
+		
+		//this event handler will enabled all button inside when you select/blok the text in rich textbox
 		void RichTextBox1SelectionChanged(object sender, EventArgs e)
 		{
 			copyToolStripMenuItem.Enabled  =  (richTextBox1.SelectedText.Length > 0)?true:false;
 			deleteToolStripMenuItem.Enabled =  (richTextBox1.SelectedText.Length > 0)?true:false;
 			cutToolStripMenuItem.Enabled = (richTextBox1.SelectedText.Length > 0)?true:false;
 		}
-
-				private void saveFile()
+		//end of others
+		
+		//save file method
+		private void saveFile()
 		{
 			saveFileDialog1.Title = "Save";
+			saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 			if(saveFileDialog1.ShowDialog() ==  DialogResult.OK)
 			{
 				richTextBox1.SaveFile(saveFileDialog1.FileName,RichTextBoxStreamType.PlainText);
@@ -127,6 +146,7 @@ namespace MyNotes
 			}
 		}
 		
+		//Open file method
 		private void OpenFile()
 		{
 			openFileDialog1.FileName = string.Empty;
@@ -144,6 +164,7 @@ namespace MyNotes
 			}
 		}
 		
+		//new file method
 		private void NewFile()
 		{
 			if(richTextBox1.Text == string.Empty){
@@ -169,6 +190,65 @@ namespace MyNotes
 					this.Focus();
 			}
 		}
+		
+		//exit method
+		private void Exit()
+		{
+			if(richTextBox1.Text !=  string.Empty || label1.Text != "Untitled")
+			{
+				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+				if(dr == DialogResult.Yes){
+					if(label1.Text == "Untitled"){
+						saveFile();
+						this.Close();
+					}
+					else{
+						richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
+						this.Close();
+					}
+				}
+				else{
+					this.Close();
+				}
+			}else{
+				this.Close();
+			}
+		}
+		
+		//	this event handler will executed when the "X" button was click and close the application
+		void Button1Click(object sender, EventArgs e)
+		{
+			Exit();
+		}
+		//minimize/"-" button event handler
+		void Button2Click(object sender, EventArgs e)
+		{
+			this.WindowState = FormWindowState.Minimized;
+		}
+		
+		//all event handler below is functioned to move tha application window
+		private void MainFormMouseDown(object sender, MouseEventArgs e)
+    	{
+        	mouseDown = true;
+        	lastLocation = e.Location;
+    	}
 
+   		 private void MainFormMouseMove(object sender, MouseEventArgs e)
+    	{
+        	if(mouseDown)
+        	{
+            	this.Location = new Point(
+              	  	(this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+            	this.Update();
+        	}
+    	}
+
+    	private void MainFormMouseUp(object sender, MouseEventArgs e)
+    	{
+        	mouseDown = false;
+    	}//
+
+		
 	}
-}
+}// end of code
