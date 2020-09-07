@@ -115,9 +115,9 @@ namespace MyNotes
 			// 
 			this.label1.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.White;
-			this.label1.Location = new System.Drawing.Point(186, 2);
+			this.label1.Location = new System.Drawing.Point(60, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(205, 23);
+			this.label1.Size = new System.Drawing.Size(475, 23);
 			this.label1.TabIndex = 11;
 			this.label1.Text = "Untitled";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -174,9 +174,6 @@ namespace MyNotes
 			this.richTextBox1.Text = "";
 			this.richTextBox1.SelectionChanged += new System.EventHandler(this.RichTextBox1SelectionChanged);
 			this.richTextBox1.TextChanged += new System.EventHandler(this.RichTextBox1TextChanged);
-			this.richTextBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseDown);
-			this.richTextBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseMove);
-			this.richTextBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseUp);
 			// 
 			// menuStrip1
 			// 
