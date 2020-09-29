@@ -70,6 +70,11 @@ namespace MyNotes
 		{
 			richTextBox1.SelectedText = "";
 		}
+		
+		void SelectAllToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			richTextBox1.SelectAll();
+		}
 		//end file menustrip
 		
 		
@@ -94,9 +99,15 @@ namespace MyNotes
 			richTextBox1.Cut();
 			richTextBox1.Copy();
 		}
+		
 		void PasteToolStripMenuItemClick(object sender, EventArgs e)
 		{	
 			richTextBox1.Paste();
+		}
+		
+		void CopyToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			richTextBox1.Copy();
 		}
 		
 		void DateToolStripMenuItemClick(object sender, EventArgs e)
@@ -248,8 +259,6 @@ namespace MyNotes
     	{
         	mouseDown = false;
     	}//
-
-		
 	}
 }// end of code
 

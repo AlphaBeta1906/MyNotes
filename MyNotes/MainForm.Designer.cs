@@ -284,6 +284,7 @@ namespace MyNotes
 			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
 			this.copyToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.copyToolStripMenuItem.Text = "Copy";
+			this.copyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItemClick);
 			// 
 			// pasteToolStripMenuItem
 			// 
@@ -316,6 +317,7 @@ namespace MyNotes
 			this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
 			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.selectAllToolStripMenuItem.Text = "Select All";
+			this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.SelectAllToolStripMenuItemClick);
 			// 
 			// toolStripSeparator2
 			// 
