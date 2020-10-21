@@ -24,7 +24,7 @@ namespace MyNotes
 	{
 		private bool mouseDown;
 		private Point lastLocation;
-
+		public bool change = false;
 		ToolTip Mytooltip = new ToolTip();
 		public MainForm()
 		{
@@ -39,23 +39,26 @@ namespace MyNotes
 			
 			//contextmenustrip
 			copyToolStripMenuItem1.Click += CopyToolStripMenuItemClick;
-			FindReplaceToolStripMenuItem1.Click += PasteToolStripMenuItemClick;
+			pasteToolStripMenuItem1.Click += PasteToolStripMenuItemClick;
+			cutToolStripMenuItem1.Click += CutToolStripMenuItemClick;
 			deleteToolStripMenuItem1.Click += DeleteToolStripMenuItemClick;
 			fontToolStripMenuItem1.Click  +=  FontToolStripMenuItemClick;
 			FindReplaceToolStripMenuItem1.Click += FindNextToolStripMenuItemClick;
 			
 			copyToolStripMenuItem1.ShortcutKeys  =  copyToolStripMenuItem.ShortcutKeys;
-			FindReplaceToolStripMenuItem1.ShortcutKeys = pasteToolStripMenuItem.ShortcutKeys;
+			pasteToolStripMenuItem1.ShortcutKeys = pasteToolStripMenuItem.ShortcutKeys;
+			cutToolStripMenuItem1.ShortcutKeys = copyToolStripMenuItem.ShortcutKeys;
 			deleteToolStripMenuItem1.ShortcutKeys =  deleteToolStripMenuItem.ShortcutKeys;
 			fontToolStripMenuItem1.ShortcutKeys  =  fontToolStripMenuItem.ShortcutKeys;
 			FindReplaceToolStripMenuItem1.ShortcutKeys = FindReplaceToolStripMenuItem.ShortcutKeys;
 
 		}
 		
-		//control in file menustrip
-		
+
+//control in file menustrip
 		void SaveToolStripMenuItemClick(object sender, EventArgs e)
 		{
+			saveFileDialog1.Title = "Save";
 			if(label1.Text == "Untitled")
 			{
 				saveFile();
@@ -63,21 +66,31 @@ namespace MyNotes
 				richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
 			}
 		}
+			
+			//open file event handler
 		void OpenToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if(richTextBox1.Text == string.Empty)
+			if(richTextBox1.Text == string.Empty && richTextBox1.Text == string.Empty)
 			{
 				OpenFile();
 			}else{
 				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
 				if(dr == DialogResult.Yes)
 				{
-					saveFile();
+					if(label1.Text != "Untitled"){
+						richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
+						OpenFile();
+					}else{
+						saveFile();
+						OpenFile();
+					}
+				}
+				if(dr == DialogResult.No){
 					OpenFile();
-				}if(dr == DialogResult.No){
-					OpenFile();
-				}else
+				}
+				else{
 					richTextBox1.Focus();
+				}
 			}
 		}
 		void NewToolStripMenuItemClick(object sender, EventArgs e)
@@ -86,6 +99,7 @@ namespace MyNotes
 		}
 		void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
 		{
+			saveFileDialog1.Title = "Save As";
 			saveFile();
 		}
 		
@@ -98,10 +112,10 @@ namespace MyNotes
 		{
 			richTextBox1.SelectAll();
 		}
-		//end file menustrip
+//end file menustrip
 		
 		
-		//edit menustrip
+//edit menustrip
 		void UndoToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			if (richTextBox1.CanUndo){
@@ -149,10 +163,12 @@ namespace MyNotes
 			}
 		}
 		
-		//others
+//others
 		void RichTextBox1TextChanged(object sender, EventArgs e)
 		{
 			undoToolStripMenuItem.Enabled = true;
+			change =  true;
+			MessageBox.Show("changed" + change.ToString());
 		}
 		
 		//this event handler will enabled all button inside when you select/blok the text in rich textbox
@@ -164,9 +180,9 @@ namespace MyNotes
 			cutToolStripMenuItem.Enabled = (richTextBox1.SelectedText.Length > 0)?true:false;
 			
 			//contextmenustrip item
-			//copyToolStripMenuItem1.Enabled  =  (richTextBox1.SelectedText.Length > 0)?true:false;
-			//deleteToolStripMenuItem1.Enabled =  (richTextBox1.SelectedText.Length > 0)?true:false;
-			//cutToolStripMenuItem1.Enabled = (richTextBox1.SelectedText.Length > 0)?true:false;
+			copyToolStripMenuItem1.Enabled  =  (richTextBox1.SelectedText.Length > 0)?true:false;
+			deleteToolStripMenuItem1.Enabled =  (richTextBox1.SelectedText.Length > 0)?true:false;
+			cutToolStripMenuItem1.Enabled = (richTextBox1.SelectedText.Length > 0)?true:false;
 		}
 		//end of others
 		
@@ -174,7 +190,6 @@ namespace MyNotes
 		private void saveFile()
 		{
 			saveFileDialog1.FileName = label1.Text + ".txt";
-			saveFileDialog1.Title = "Save";
 			saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 			if(saveFileDialog1.ShowDialog() ==  DialogResult.OK)
 			{
@@ -201,8 +216,9 @@ namespace MyNotes
 					richTextBox1.Clear();
 					richTextBox1.LoadFile(openFileDialog1.FileName,RichTextBoxStreamType.PlainText);
 					label1.Text =  openFileDialog1.FileName;
+					change = false;
 				}
-			}
+			}	
 		}
 		
 		//new file method
@@ -210,7 +226,14 @@ namespace MyNotes
 		{
 			if(richTextBox1.Text == string.Empty){
 				richTextBox1.Focus();
-			}else{
+			}
+			else if(label1.Text != "Untitled" && change == true){
+				richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
+				richTextBox1.Clear();
+				label1.Text = "Untitled";
+				change = false;
+			}
+			else{
 				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
 				if(dr == DialogResult.Yes){
 					if(label1.Text == "Untitled"){
@@ -222,6 +245,7 @@ namespace MyNotes
 						richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
 						richTextBox1.Clear();
 						label1.Text = "Untitled";
+						change = false;
 					}
 				}
 				if(dr == DialogResult.No){
@@ -321,12 +345,6 @@ namespace MyNotes
 					break;
 			}
 		}
-		void Button4Click(object sender, EventArgs e)
-		{
-			//find event handler
-		}
-		
-
 		
 		void TextBoxTextChanged(object sender,EventArgs e)
 		{
@@ -352,7 +370,9 @@ namespace MyNotes
 		}
 		void RichTextBox1MouseDown(object sender, MouseEventArgs e)
 		{
-			
+			if(e.Button == MouseButtons.Right){
+				contextMenuStrip1.Show(Cursor.Position);
+			}
 		}
 
 
@@ -360,5 +380,3 @@ namespace MyNotes
 
 	} 
 }// end of code
-
-
