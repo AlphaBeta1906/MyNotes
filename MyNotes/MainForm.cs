@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
@@ -23,10 +24,32 @@ namespace MyNotes
 	{
 		private bool mouseDown;
 		private Point lastLocation;
+
+		ToolTip Mytooltip = new ToolTip();
 		public MainForm()
 		{
 			InitializeComponent();
 			cutToolStripMenuItem.Enabled = false;
+			
+			//control in findnext panel
+			button3.MouseHover += FindNextButton;
+			FindButton.MouseHover += FindNextButton;
+			textBox1.TextChanged +=  TextBoxTextChanged;
+			textBox2.TextChanged += TextBoxTextChanged;
+			
+			//contextmenustrip
+			copyToolStripMenuItem1.Click += CopyToolStripMenuItemClick;
+			FindReplaceToolStripMenuItem1.Click += PasteToolStripMenuItemClick;
+			deleteToolStripMenuItem1.Click += DeleteToolStripMenuItemClick;
+			fontToolStripMenuItem1.Click  +=  FontToolStripMenuItemClick;
+			FindReplaceToolStripMenuItem1.Click += FindNextToolStripMenuItemClick;
+			
+			copyToolStripMenuItem1.ShortcutKeys  =  copyToolStripMenuItem.ShortcutKeys;
+			FindReplaceToolStripMenuItem1.ShortcutKeys = pasteToolStripMenuItem.ShortcutKeys;
+			deleteToolStripMenuItem1.ShortcutKeys =  deleteToolStripMenuItem.ShortcutKeys;
+			fontToolStripMenuItem1.ShortcutKeys  =  fontToolStripMenuItem.ShortcutKeys;
+			FindReplaceToolStripMenuItem1.ShortcutKeys = FindReplaceToolStripMenuItem.ShortcutKeys;
+
 		}
 		
 		//control in file menustrip
@@ -135,15 +158,22 @@ namespace MyNotes
 		//this event handler will enabled all button inside when you select/blok the text in rich textbox
 		void RichTextBox1SelectionChanged(object sender, EventArgs e)
 		{
+			//toolstrip menu item
 			copyToolStripMenuItem.Enabled  =  (richTextBox1.SelectedText.Length > 0)?true:false;
 			deleteToolStripMenuItem.Enabled =  (richTextBox1.SelectedText.Length > 0)?true:false;
 			cutToolStripMenuItem.Enabled = (richTextBox1.SelectedText.Length > 0)?true:false;
+			
+			//contextmenustrip item
+			//copyToolStripMenuItem1.Enabled  =  (richTextBox1.SelectedText.Length > 0)?true:false;
+			//deleteToolStripMenuItem1.Enabled =  (richTextBox1.SelectedText.Length > 0)?true:false;
+			//cutToolStripMenuItem1.Enabled = (richTextBox1.SelectedText.Length > 0)?true:false;
 		}
 		//end of others
 		
 		//save file method
 		private void saveFile()
 		{
+			saveFileDialog1.FileName = label1.Text + ".txt";
 			saveFileDialog1.Title = "Save";
 			saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 			if(saveFileDialog1.ShowDialog() ==  DialogResult.OK)
@@ -207,7 +237,7 @@ namespace MyNotes
 		{
 			if(richTextBox1.Text !=  string.Empty || label1.Text != "Untitled")
 			{
-				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
 				if(dr == DialogResult.Yes){
 					if(label1.Text == "Untitled"){
 						saveFile();
@@ -218,8 +248,10 @@ namespace MyNotes
 						this.Close();
 					}
 				}
-				else{
+				if(dr == DialogResult.No){
 					this.Close();
+				}else{
+					this.Focus();
 				}
 			}else{
 				this.Close();
@@ -258,8 +290,75 @@ namespace MyNotes
     	private void MainFormMouseUp(object sender, MouseEventArgs e)
     	{
         	mouseDown = false;
-    	}//
-	}
+    	}
+    	
+		void FindNextToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			panel3.Visible = true;
+			FindButton.Visible =  true;
+			textBox1.Visible =  true;
+			button3.Visible = true;
+			richTextBox1.Height = 374;
+		}
+		void Button3Click(object sender, EventArgs e)
+		{
+			panel3.Visible = false;
+			FindButton.Visible =  false;
+			textBox1.Visible =  false;
+			button3.Visible = false;
+			richTextBox1.Height = 398;
+		}
+		
+		void FindNextButton(object sender,EventArgs e)
+		{
+			Button button = sender as Button;
+			switch(button.Name){
+				case "button4":
+					Mytooltip.Show("Find Next",FindButton);
+					break;
+				case "button3":
+					Mytooltip.Show("Close Find next",button3);
+					break;
+			}
+		}
+		void Button4Click(object sender, EventArgs e)
+		{
+			//find event handler
+		}
+		
+
+		
+		void TextBoxTextChanged(object sender,EventArgs e)
+		{
+			TextBox textbox = sender as TextBox;
+			if(textbox.Text.Length != 0){
+				switch(textbox.Name){
+					case "textBox1":
+						FindButton.Enabled = true;
+						break;
+					case "textBox2":
+						ReplaceButton.Enabled = true;
+						break;
+				}
+			}else{
+				FindButton.Enabled = false;
+				ReplaceButton.Enabled = false;
+			}
+		}
+		void ReplaceButtonClick(object sender, EventArgs e)
+		{
+			richTextBox1.SelectedText = textBox2.Text;
+			
+		}
+		void RichTextBox1MouseDown(object sender, MouseEventArgs e)
+		{
+			
+		}
+
+
+			
+
+	} 
 }// end of code
 
 
