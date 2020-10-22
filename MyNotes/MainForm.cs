@@ -24,7 +24,6 @@ namespace MyNotes
 	{
 		private bool mouseDown;
 		private Point lastLocation;
-		public bool change = false;
 		ToolTip Mytooltip = new ToolTip();
 		public MainForm()
 		{
@@ -70,7 +69,7 @@ namespace MyNotes
 			//open file event handler
 		void OpenToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if(richTextBox1.Text == string.Empty && richTextBox1.Text == string.Empty)
+			if(richTextBox1.Text == string.Empty && label1.Text == "Untitled")
 			{
 				OpenFile();
 			}else{
@@ -167,8 +166,6 @@ namespace MyNotes
 		void RichTextBox1TextChanged(object sender, EventArgs e)
 		{
 			undoToolStripMenuItem.Enabled = true;
-			change =  true;
-			MessageBox.Show("changed" + change.ToString());
 		}
 		
 		//this event handler will enabled all button inside when you select/blok the text in rich textbox
@@ -216,7 +213,6 @@ namespace MyNotes
 					richTextBox1.Clear();
 					richTextBox1.LoadFile(openFileDialog1.FileName,RichTextBoxStreamType.PlainText);
 					label1.Text =  openFileDialog1.FileName;
-					change = false;
 				}
 			}	
 		}
@@ -227,12 +223,6 @@ namespace MyNotes
 			if(richTextBox1.Text == string.Empty){
 				richTextBox1.Focus();
 			}
-			else if(label1.Text != "Untitled" && change == true){
-				richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
-				richTextBox1.Clear();
-				label1.Text = "Untitled";
-				change = false;
-			}
 			else{
 				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
 				if(dr == DialogResult.Yes){
@@ -240,12 +230,12 @@ namespace MyNotes
 						saveFile();
 						richTextBox1.Clear();
 						label1.Text = "Untitled";
+						
 					}
 					else{
 						richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
 						richTextBox1.Clear();
 						label1.Text = "Untitled";
-						change = false;
 					}
 				}
 				if(dr == DialogResult.No){
