@@ -257,7 +257,7 @@ namespace MyNotes
 			this.FindButton.Text = "button4";
 			this.FindButton.UseVisualStyleBackColor = true;
 			this.FindButton.Visible = false;
-			this.FindButton.Click += new System.EventHandler(this.Button4Click);
+
 			// 
 			// textBox1
 			// 
@@ -490,6 +490,7 @@ namespace MyNotes
 			// 
 			// copyToolStripMenuItem1
 			// 
+			this.copyToolStripMenuItem1.Enabled = false;
 			this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
 			this.copyToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
 			this.copyToolStripMenuItem1.Text = "Copy";
@@ -502,12 +503,14 @@ namespace MyNotes
 			// 
 			// cutToolStripMenuItem1
 			// 
+			this.cutToolStripMenuItem1.Enabled = false;
 			this.cutToolStripMenuItem1.Name = "cutToolStripMenuItem1";
 			this.cutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
 			this.cutToolStripMenuItem1.Text = "Cut";
 			// 
 			// deleteToolStripMenuItem1
 			// 
+			this.deleteToolStripMenuItem1.Enabled = false;
 			this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
 			this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
 			this.deleteToolStripMenuItem1.Text = "Delete";
@@ -558,5 +561,3 @@ namespace MyNotes
 		
 	}
 }
-
-		
