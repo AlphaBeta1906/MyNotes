@@ -21,7 +21,6 @@ namespace MyNotes
 		public About()
 		{
 			InitializeComponent();
-			
 		}
 		void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
