@@ -14,3 +14,4 @@ C:\Users\Salman-pc\Documents\GitHub\MyNotes\MyNotes\obj\Debug\MyNotes.pdb
 C:\Users\Salman-pc\Documents\GitHub\MyNotes\MyNotes\bin\Debug\MyNotes.exe.config
 C:\Users\Salman-pc\Documents\GitHub\MyNotes\MyNotes\bin\Debug\MyNotes.exe
 C:\Users\Salman-pc\Documents\GitHub\MyNotes\MyNotes\bin\Debug\MyNotes.pdb
+C:\Users\Salman-pc\Documents\GitHub\MyNotes\MyNotes\obj\Debug\MyNotes.About.resources
