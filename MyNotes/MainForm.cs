@@ -24,7 +24,11 @@ namespace MyNotes
 	{
 		private bool mouseDown;
 		private Point lastLocation;
+		private bool change =  false;
 		ToolTip Mytooltip = new ToolTip();
+		
+		
+		int t = 0;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -42,14 +46,14 @@ namespace MyNotes
 			cutToolStripMenuItem1.Click += CutToolStripMenuItemClick;
 			deleteToolStripMenuItem1.Click += DeleteToolStripMenuItemClick;
 			fontToolStripMenuItem1.Click  +=  FontToolStripMenuItemClick;
-			FindReplaceToolStripMenuItem1.Click += FindNextToolStripMenuItemClick;
+
 			
 			copyToolStripMenuItem1.ShortcutKeys  =  copyToolStripMenuItem.ShortcutKeys;
 			pasteToolStripMenuItem1.ShortcutKeys = pasteToolStripMenuItem.ShortcutKeys;
 			cutToolStripMenuItem1.ShortcutKeys = copyToolStripMenuItem.ShortcutKeys;
 			deleteToolStripMenuItem1.ShortcutKeys =  deleteToolStripMenuItem.ShortcutKeys;
 			fontToolStripMenuItem1.ShortcutKeys  =  fontToolStripMenuItem.ShortcutKeys;
-			FindReplaceToolStripMenuItem1.ShortcutKeys = FindReplaceToolStripMenuItem.ShortcutKeys;
+
 
 		}
 		
@@ -63,17 +67,18 @@ namespace MyNotes
 				saveFile();
 			}else{
 				richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
+				change = false;
 			}
 		}
 			
 			//open file event handler
 		void OpenToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if(richTextBox1.Text == string.Empty && label1.Text == "Untitled")
+			if(richTextBox1.Text == string.Empty && label1.Text == "Untitled" || change == false)
 			{
 				OpenFile();
 			}else{
-				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
+				DialogResult dr =  MessageBox.Show("Do you want to save change to " +label1.Text+" ?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
 				if(dr == DialogResult.Yes)
 				{
 					if(label1.Text != "Untitled"){
@@ -166,6 +171,7 @@ namespace MyNotes
 		void RichTextBox1TextChanged(object sender, EventArgs e)
 		{
 			undoToolStripMenuItem.Enabled = true;
+			change = true;
 		}
 		
 		//this event handler will enabled all button inside when you select/blok the text in rich textbox
@@ -186,12 +192,13 @@ namespace MyNotes
 		//save file method
 		private void saveFile()
 		{
-			saveFileDialog1.FileName = label1.Text + ".txt";
+			saveFileDialog1.FileName = label1.Text + " .txt";
 			saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 			if(saveFileDialog1.ShowDialog() ==  DialogResult.OK)
 			{
 				richTextBox1.SaveFile(saveFileDialog1.FileName,RichTextBoxStreamType.PlainText);
 				label1.Text = saveFileDialog1.FileName;
+				change =false;
 			}
 			else
 			{
@@ -213,6 +220,8 @@ namespace MyNotes
 					richTextBox1.Clear();
 					richTextBox1.LoadFile(openFileDialog1.FileName,RichTextBoxStreamType.PlainText);
 					label1.Text =  openFileDialog1.FileName;
+					change =  false;
+					undoToolStripMenuItem.Enabled = false;
 				}
 			}	
 		}
@@ -220,38 +229,53 @@ namespace MyNotes
 		//new file method
 		private void NewFile()
 		{
-			if(richTextBox1.Text == string.Empty){
+			if(richTextBox1.Text == string.Empty && label1.Text == "Untitled"){
 				richTextBox1.Focus();
+				undoToolStripMenuItem.Enabled = false;
+			}
+			
+			else if(change == false && label1.Text != "Untitled"){
+				richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
+				label1.Text = "Untitled";
+				richTextBox1.Clear();
+				undoToolStripMenuItem.Enabled = false;
 			}
 			else{
-				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
+				DialogResult dr =  MessageBox.Show("Do you want to save change to " +label1.Text+" ?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
 				if(dr == DialogResult.Yes){
 					if(label1.Text == "Untitled"){
 						saveFile();
 						richTextBox1.Clear();
+						change = false;
 						label1.Text = "Untitled";
+						undoToolStripMenuItem.Enabled = false;
 						
 					}
 					else{
 						richTextBox1.SaveFile(label1.Text,RichTextBoxStreamType.PlainText);
 						richTextBox1.Clear();
+						change =  false;
 						label1.Text = "Untitled";
+						undoToolStripMenuItem.Enabled = false;
 					}
 				}
 				if(dr == DialogResult.No){
 					richTextBox1.Clear();
+					change = false;
 					label1.Text = "Untitled";
-				}else
+					undoToolStripMenuItem.Enabled = false;
+				}else{
 					this.Focus();
+				}
 			}
 		}
 		
 		//exit method
 		private void Exit()
 		{
-			if(richTextBox1.Text !=  string.Empty || label1.Text != "Untitled")
+			if((richTextBox1.Text !=  string.Empty || label1.Text != "Untitled") && change ==  true)
 			{
-				DialogResult dr =  MessageBox.Show("Do you want to save this file first?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
+				DialogResult dr =  MessageBox.Show("Do you want to save change to " +label1.Text+" ?","",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
 				if(dr == DialogResult.Yes){
 					if(label1.Text == "Untitled"){
 						saveFile();
@@ -267,7 +291,8 @@ namespace MyNotes
 				}else{
 					this.Focus();
 				}
-			}else{
+			}
+			else{
 				this.Close();
 			}
 		}
@@ -306,14 +331,14 @@ namespace MyNotes
         	mouseDown = false;
     	}
     	
-		void FindNextToolStripMenuItemClick(object sender, EventArgs e)
+		/*void FindNextToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			panel3.Visible = true;
 			FindButton.Visible =  true;
 			textBox1.Visible =  true;
 			button3.Visible = true;
 			richTextBox1.Height = 374;
-		}
+		}*/
 		void Button3Click(object sender, EventArgs e)
 		{
 			panel3.Visible = false;
@@ -327,11 +352,14 @@ namespace MyNotes
 		{
 			Button button = sender as Button;
 			switch(button.Name){
-				case "button4":
+				case "FindButton":
 					Mytooltip.Show("Find Next",FindButton);
 					break;
 				case "button3":
 					Mytooltip.Show("Close Find next",button3);
+					break;
+				case "ReplaceButton":
+					Mytooltip.Show("Replace",ReplaceButton);
 					break;
 			}
 		}
@@ -356,17 +384,53 @@ namespace MyNotes
 		void ReplaceButtonClick(object sender, EventArgs e)
 		{
 			richTextBox1.SelectedText = textBox2.Text;
-			
 		}
+		
 		void RichTextBox1MouseDown(object sender, MouseEventArgs e)
 		{
 			if(e.Button == MouseButtons.Right){
 				contextMenuStrip1.Show(Cursor.Position);
 			}
 		}
+		void FindButtonClick(object sender, EventArgs e)
+		{
+			for(int i = 0;i < richTextBox1.TextLength-textBox1.TextLength;i++){
+				
+				string x ="";
+				for(int j = 0;j<textBox1.TextLength;j++){
+					
+					if(textBox1.Text[j] == richTextBox1.Text[i+j]){
+						x+= richTextBox1.Text[i+j] + "";
+					}else{
+						x = "";
+					}
+				}
+				if(x ==  textBox1.Text){
+					t = i +1;
+					richTextBox1.SelectAll();
+					richTextBox1.SelectionBackColor = Color.White;
+					richTextBox1.Select(i,textBox1.TextLength);
+					richTextBox1.SelectionBackColor = Color.SkyBlue;
+					break;
+				}
+				
+				if(i == richTextBox1.TextLength-textBox1.TextLength - 1){
+					MessageBox.Show("text not found");
+					t = 0;
+				}
+			}
+		}
+		void RichTextBox1Enter(object sender, EventArgs e)
+		{
+			richTextBox1.SelectAll();
+			richTextBox1.SelectionBackColor = Color.White;
+		}
+		void AboutToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			About about = new About();
+			about.Show();
+		}
 
-
-			
 
 	} 
 }// end of code
