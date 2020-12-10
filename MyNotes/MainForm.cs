@@ -172,6 +172,7 @@ namespace MyNotes
 		{
 			undoToolStripMenuItem.Enabled = true;
 			change = true;
+
 		}
 		
 		//this event handler will enabled all button inside when you select/blok the text in rich textbox
