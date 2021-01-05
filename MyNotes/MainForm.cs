@@ -27,19 +27,13 @@ namespace MyNotes
 		private bool change =  false;
 		ToolTip Mytooltip = new ToolTip();
 		
-		
-		int t = 0;
 		public MainForm()
 		{
 			InitializeComponent();
 			cutToolStripMenuItem.Enabled = false;
 			
 			//control in findnext panel
-			button3.MouseHover += FindNextButton;
-			FindButton.MouseHover += FindNextButton;
-			textBox1.TextChanged +=  TextBoxTextChanged;
-			textBox2.TextChanged += TextBoxTextChanged;
-			
+
 			//contextmenustrip
 			copyToolStripMenuItem1.Click += CopyToolStripMenuItemClick;
 			pasteToolStripMenuItem1.Click += PasteToolStripMenuItemClick;
@@ -297,7 +291,6 @@ namespace MyNotes
 				this.Close();
 			}
 		}
-		
 		//	this event handler will executed when the "X" button was click and close the application
 		void Button1Click(object sender, EventArgs e)
 		{
@@ -331,96 +324,14 @@ namespace MyNotes
     	{
         	mouseDown = false;
     	}
-    	
-		/*void FindNextToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			panel3.Visible = true;
-			FindButton.Visible =  true;
-			textBox1.Visible =  true;
-			button3.Visible = true;
-			richTextBox1.Height = 374;
-		}*/
-		void Button3Click(object sender, EventArgs e)
-		{
-			panel3.Visible = false;
-			FindButton.Visible =  false;
-			textBox1.Visible =  false;
-			button3.Visible = false;
-			richTextBox1.Height = 398;
-		}
-		
-		void FindNextButton(object sender,EventArgs e)
-		{
-			Button button = sender as Button;
-			switch(button.Name){
-				case "FindButton":
-					Mytooltip.Show("Find Next",FindButton);
-					break;
-				case "button3":
-					Mytooltip.Show("Close Find next",button3);
-					break;
-				case "ReplaceButton":
-					Mytooltip.Show("Replace",ReplaceButton);
-					break;
-			}
-		}
-		
-		void TextBoxTextChanged(object sender,EventArgs e)
-		{
-			TextBox textbox = sender as TextBox;
-			if(textbox.Text.Length != 0){
-				switch(textbox.Name){
-					case "textBox1":
-						FindButton.Enabled = true;
-						break;
-					case "textBox2":
-						ReplaceButton.Enabled = true;
-						break;
-				}
-			}else{
-				FindButton.Enabled = false;
-				ReplaceButton.Enabled = false;
-			}
-		}
-		void ReplaceButtonClick(object sender, EventArgs e)
-		{
-			richTextBox1.SelectedText = textBox2.Text;
-		}
-		
+    	 
 		void RichTextBox1MouseDown(object sender, MouseEventArgs e)
 		{
 			if(e.Button == MouseButtons.Right){
 				contextMenuStrip1.Show(Cursor.Position);
 			}
 		}
-		void FindButtonClick(object sender, EventArgs e)
-		{
-			for(int i = 0;i < richTextBox1.TextLength-textBox1.TextLength;i++){
-				
-				string x ="";
-				for(int j = 0;j<textBox1.TextLength;j++){
-					
-					if(textBox1.Text[j] == richTextBox1.Text[i+j]){
-						x+= richTextBox1.Text[i+j] + "";
-					}else{
-						x = "";
-					}
-				}
-				if(x ==  textBox1.Text){
-					t = i +1;
-					richTextBox1.SelectAll();
-					richTextBox1.SelectionBackColor = Color.White;
-					richTextBox1.Select(i,textBox1.TextLength);
-					richTextBox1.SelectionBackColor = Color.SkyBlue;
-					break;
-				}
-				
-				if(i == richTextBox1.TextLength-textBox1.TextLength - 1){
-					MessageBox.Show("text not found");
-					t = 0;
-				}
-			}
-		}
+		
 		void RichTextBox1Enter(object sender, EventArgs e)
 		{
 			richTextBox1.SelectAll();
