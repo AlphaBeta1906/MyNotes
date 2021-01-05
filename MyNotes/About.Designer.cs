@@ -73,6 +73,7 @@ namespace MyNotes
 			this.ClientSize = new System.Drawing.Size(372, 210);
 			this.Controls.Add(this.linkLabel1);
 			this.Controls.Add(this.label1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "About";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -285,6 +285,7 @@ namespace MyNotes
 			// richTextBox1
 			// 
 			this.richTextBox1.BackColor = System.Drawing.SystemColors.Window;
+			this.richTextBox1.EnableAutoDragDrop = true;
 			this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBox1.Location = new System.Drawing.Point(0, 24);
 			this.richTextBox1.Name = "richTextBox1";
